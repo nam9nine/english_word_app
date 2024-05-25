@@ -1,8 +1,10 @@
 import 'package:english_world/views/learning_page/learning-travel.page.dart';
 import 'package:flutter/material.dart';
+import '../../repository/word-repository.dart';
 
 class LearnPage extends StatefulWidget  {
-  const LearnPage({super.key});
+  final WordRepository repository;
+  const LearnPage({super.key, required this.repository});
 
   @override
   State<StatefulWidget> createState() {
@@ -38,7 +40,7 @@ class _LearnPage extends State<LearnPage> {
                             )
                           ),
                           onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder : (context)=> TravelWordPage()));
+                            Navigator.push(context, MaterialPageRoute(builder : (context)=> TravelWordPage(repository : widget.repository)));
                           }
                         )
                       ]
