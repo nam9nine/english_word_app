@@ -24,8 +24,7 @@ class WordRepository {
 
   Future<void> deleteDatabaseFile() async {
     var databasesPath = await getDatabasesPath();
-    String path = join(databasesPath, 'words.db'); // 'your_database_name.db'을 실제 데이터베이스 이름으로 변경
-    // 데이터베이스 파일 삭제
+    String path = join(databasesPath, 'words.db');
     await deleteDatabase(path);
   }
 }

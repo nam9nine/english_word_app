@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
-import '../../widget/carousel_slider.dart';
 
 class QuizPage extends StatefulWidget  {
   final WordRepository repository;
