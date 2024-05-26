@@ -22,9 +22,20 @@ class WordRepository {
     return result;
   }
 
+  Future<List<Word>> getWrongAnswer(String category) async {
+    final db = await _databaseHelper.database;
+    final result = await db.query('words',
+        where : 'category = ? AND is_wrong = ?',
+        whereArgs: [category, 0]
+    );
+    List<Word> words = result.map((map) => Word.fromMap(map)).toList();
+    return words;
+  }
+
   Future<void> deleteDatabaseFile() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'words.db');
     await deleteDatabase(path);
   }
+
 }

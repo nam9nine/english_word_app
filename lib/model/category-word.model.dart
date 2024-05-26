@@ -26,4 +26,5 @@ class Word {
       is_wrong: map['is_wrong'] == 1,
     );
   }
+
 }

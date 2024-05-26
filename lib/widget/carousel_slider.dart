@@ -8,6 +8,7 @@ import '../model/main-category.model.dart';
 class MainCarouselSlider extends StatefulWidget {
   final List<Category> categories;
   late int pageIndex;
+
   MainCarouselSlider({super.key, required this.categories, this.pageIndex = 0});
 
   @override
@@ -63,8 +64,9 @@ class _MainCarouselSlider extends State<MainCarouselSlider> {
 
 class LearnCarouselSlider extends StatefulWidget {
   final List<Word>? words;
-  int pageIndex = 0;
-  LearnCarouselSlider({super.key, required this.words, required this.pageIndex});
+  int pageIndex;
+  bool is_finished = false;
+  LearnCarouselSlider({super.key, required this.words, required this.pageIndex, required this.is_finished});
 
   @override
   State<StatefulWidget> createState() => _LearnCarouselSliderState();
@@ -124,7 +126,10 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
               enlargeCenterPage: true,
               enableInfiniteScroll: false,
               onPageChanged: (index, reason) {
-                widget.pageIndex = index;
+                setState(() {
+                  widget.pageIndex = index;
+                  widget.is_finished = true;
+                });
               }
           ),
         ),

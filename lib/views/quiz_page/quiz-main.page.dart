@@ -35,7 +35,12 @@ class _QuizPage extends State<QuizPage> {
             }
             // 영어단어 데이터 쓰는 예시
             return Container(
-              child : Text(snapshot.data![0].english)
+              child : Column(
+                children: [
+                  Text(snapshot.data![0].english.toString(), style: const TextStyle(color: Colors.black)),
+                 Text(snapshot.data![0].meaning.toString(), style: const TextStyle(color: Colors.black)),
+                ],
+              )
             );
           } else {
             return const Center(child: CircularProgressIndicator());
