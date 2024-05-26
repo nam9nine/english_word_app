@@ -3,8 +3,11 @@
 
 import 'package:flutter/material.dart';
 
+import '../../repository/word-repository.dart';
+
 class IncorrectPage extends StatefulWidget  {
-  const IncorrectPage({super.key});
+  final WordRepository repository;
+  const IncorrectPage({super.key, required this.repository});
 
   @override
   State<StatefulWidget> createState() {

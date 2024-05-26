@@ -65,8 +65,8 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         children: <Widget>[
           HomePage(categories: categories, repository : repository),
           LearnPage(repository: repository),
-          QuizPage(),
-          IncorrectPage(),
+          QuizPage(repository: repository),
+          IncorrectPage(repository: repository),
         ],
       ),
       bottomNavigationBar: TabBar(
