@@ -59,6 +59,7 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
+    - assets/data/words.json
     - assets/images/travel_icon.png
     - assets/images/travel_banner.jpg
     - assets/images/restaurant_banner.jpg

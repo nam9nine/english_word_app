@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -18,24 +21,23 @@ class DatabaseHelper {
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
-  Future _createDB(Database db, int version) async {
+  Future<void> _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE words (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        english TEXT,
-        meaning TEXT
-      )
-    ''');
+    CREATE TABLE words (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      english TEXT NOT NULL,
+      meaning TEXT,
+      category TEXT NOT NULL,
+      is_wrong INTEGER NOT NULL DEFAULT 0
+    )
+  ''');
     await _insertInitialWords(db);
   }
 
   Future _insertInitialWords(Database db) async {
-    const initialWords = [
-      {'english': 'apple', 'meaning': 'A fruit', 'category' : 'Travel'},
-      {'english': 'book', 'meaning': 'A set of written pages','category' : 'Travel'},
-      {'english': 'cat', 'meaning': 'A small domestic animal'}
-    ];
-    for (var word in initialWords) {
+    String data = await rootBundle.loadString('assets/data/words.json');
+    List<dynamic> words =  jsonDecode(data);
+    for (var word in words) {
       await db.insert('words', word);
     }
   }
