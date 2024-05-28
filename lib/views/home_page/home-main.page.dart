@@ -1,17 +1,15 @@
   import 'package:carousel_slider/carousel_slider.dart';
   import 'package:english_world/model/main-category.model.dart';
   import 'package:english_world/views/learning_page/learning-travel.page.dart';
-  import 'package:english_world/widget/carousel_slider.dart';
+  import 'package:english_world/widget/main-carousel.dart';
   import 'package:flutter/material.dart';
-  import 'package:sqflite/sqflite.dart';
   import '../../repository/word-repository.dart';
-  import '../learning_page/learning-main.page.dart';
 
   class HomePage extends StatefulWidget {
       final List<Category> categories;
       final WordRepository repository;
 
-      HomePage({super.key, required this.categories, required this.repository});
+      const HomePage({super.key, required this.categories, required this.repository});
 
       @override
       _HomePageState createState() => _HomePageState();

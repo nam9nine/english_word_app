@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:english_world/widget/carousel_slider.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
+import '../../widget/learn-carousel.dart';
 import 'learning-main.page.dart';
 
 class TravelWordPage extends StatefulWidget {
@@ -13,6 +13,7 @@ class TravelWordPage extends StatefulWidget {
 }
 
 class _TravelWordPageState extends State<TravelWordPage> {
+
   final ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
   final ValueNotifier<bool> isFinished = ValueNotifier<bool>(false);
 
@@ -30,11 +31,19 @@ class _TravelWordPageState extends State<TravelWordPage> {
                 valueListenable: pageIndexNotifier,
                 builder: (_, value, __) {
                   return Padding(
-                    padding: const EdgeInsets.only(top : 10.0, bottom: 5.0),
-                    child: Text('${value + 1}/10'),
+                    padding: const EdgeInsets.only(top : 20.0, bottom: 5.0),
+                    child: Text(
+                        '${value + 1}/10',
+                        style : const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30
+                        ),
+                    ),
                   );
                 },
               ),
+
               FutureBuilder<List<Word>>(
                 future: widget.repository.getWordsByCategory('Travel'),
                 builder: (context, snapshot) {
@@ -59,7 +68,6 @@ class _TravelWordPageState extends State<TravelWordPage> {
                   }
                 },
               ),
-
               ValueListenableBuilder<bool>(
                   valueListenable: isFinished,
                   builder: (_, value, __){

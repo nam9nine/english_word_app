@@ -6,17 +6,17 @@ import 'package:english_world/views/incorrect_page/incorrect-main.page.dart';
 import 'package:english_world/views/learning_page/learning-main.page.dart';
 import 'package:english_world/views/quiz_page/quiz-main.page.dart';
 import 'package:flutter/material.dart';
-
 import 'db/db.dart';
 
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
   runApp( EnglishWordApp());
 }
 
 class EnglishWordApp extends StatelessWidget {
-  EnglishWordApp({super.key});
+  const EnglishWordApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -65,7 +65,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         children: <Widget>[
           HomePage(categories: categories, repository : repository),
           LearnPage(repository: repository),
-          QuizPage(repository: repository),
+          QuizMainPage(repository: repository),
           IncorrectPage(repository: repository),
         ],
       ),

@@ -30,7 +30,7 @@ class DatabaseHelper {
       english TEXT NOT NULL,
       meaning TEXT,
       category TEXT NOT NULL,
-      is_wrong INTEGER NOT NULL DEFAULT 0
+      isWrong INTEGER NOT NULL DEFAULT 0
     )
   ''');
     await _insertInitialWords(db);

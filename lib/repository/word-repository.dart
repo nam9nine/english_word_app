@@ -1,6 +1,5 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../db/db.dart';
 import '../model/category-word.model.dart';
 
@@ -25,8 +24,8 @@ class WordRepository {
   Future<List<Word>> getWrongAnswer(String category) async {
     final db = await _databaseHelper.database;
     final result = await db.query('words',
-        where : 'category = ? AND is_wrong = ?',
-        whereArgs: [category, 0]
+        where : 'category = ? AND isWrong = ?',
+        whereArgs: [category, 1]
     );
     List<Word> words = result.map((map) => Word.fromMap(map)).toList();
     return words;
@@ -38,4 +37,13 @@ class WordRepository {
     await deleteDatabase(path);
   }
 
+  Future<void> updateWrongAnswer(String? correctWord, String category) async {
+    var db = await _databaseHelper.database;
+   var result = await db.update(
+      'words',
+      {'isWrong': 1},
+      where: 'meaning = ? AND category = ?',
+      whereArgs: [correctWord, category],
+    );
+  }
 }
