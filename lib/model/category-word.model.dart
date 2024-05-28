@@ -3,9 +3,9 @@ class Word {
   final String english;
   String? meaning;
   final String category;
-  bool is_wrong = false;
+  bool isWrong = false;
 
-  Word({required this.id, required this.english, this.meaning, required this.category, required this.is_wrong});
+  Word({required this.id, required this.english, this.meaning, required this.category, required this.isWrong});
 
   Map<String, dynamic> toMap() {
     return {
@@ -13,7 +13,7 @@ class Word {
       'english': english,
       'meaning': meaning,
       'category': category,
-      'is_wrong': is_wrong ? 1 : 0,
+      'isWrong': isWrong ? 1 : 0,
     };
   }
 
@@ -23,8 +23,7 @@ class Word {
       english: map['english'],
       meaning: map['meaning'],
       category: map['category'],
-      is_wrong: map['is_wrong'] == 1,
+      isWrong: map['isWrong'] == 1,
     );
   }
-
 }

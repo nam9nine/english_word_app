@@ -18,6 +18,8 @@ class DatabaseHelper {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
+
+    await deleteDatabase(path);
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
 
@@ -35,10 +37,15 @@ class DatabaseHelper {
   }
 
   Future _insertInitialWords(Database db) async {
-    String data = await rootBundle.loadString('assets/data/words.json');
-    List<dynamic> words =  jsonDecode(data);
-    for (var word in words) {
-      await db.insert('words', word);
+    try {
+      String data = await rootBundle.loadString('assets/data/words.json');
+      List<dynamic> words = jsonDecode(data);
+      for (var word in words) {
+        await db.insert('words', word);
+      }
+    } catch (e) {
+      print('데이터베이스 <- 단어 입력 오류 word : $e');
     }
   }
+
 }

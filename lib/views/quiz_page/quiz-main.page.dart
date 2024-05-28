@@ -31,7 +31,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   void _loadWords() async {
-    List<Word> loadedWords = await widget.repository.getWordsByCategory('Restaurant');
+    List<Word> loadedWords = await widget.repository.getWordsByCategory('Travel');
     List<Word> shuffledWords = List.from(loadedWords)..shuffle();
     setState(() {
       allWords = loadedWords;
@@ -61,11 +61,9 @@ class _QuizPageState extends State<QuizPage> {
       ));
       return;
     }
-
     setState(() {
       userAnswer = userAns;
     });
-
     if (userAnswer!.toLowerCase() == correctAnswer!.toLowerCase()) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Correct!'),

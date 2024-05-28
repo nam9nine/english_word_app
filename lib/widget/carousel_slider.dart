@@ -7,9 +7,9 @@ import '../model/main-category.model.dart';
 
 class MainCarouselSlider extends StatefulWidget {
   final List<Category> categories;
-  late int pageIndex;
 
-  MainCarouselSlider({super.key, required this.categories, this.pageIndex = 0});
+  final void Function(int) onPageChanged;
+  MainCarouselSlider({super.key, required this.categories, required this.onPageChanged});
 
   @override
   State<StatefulWidget> createState() {
@@ -53,9 +53,7 @@ class _MainCarouselSlider extends State<MainCarouselSlider> {
             enlargeCenterPage: true,
             autoPlay: true,
             onPageChanged : (index, reason){
-              setState(() {
-                widget.pageIndex = index;
-              });
+              widget.onPageChanged(index);
             }
         ),
     );
@@ -64,9 +62,12 @@ class _MainCarouselSlider extends State<MainCarouselSlider> {
 
 class LearnCarouselSlider extends StatefulWidget {
   final List<Word>? words;
-  int pageIndex;
-  bool is_finished = false;
-  LearnCarouselSlider({super.key, required this.words, required this.pageIndex, required this.is_finished});
+  final void Function(int) onPageChanged;
+  const LearnCarouselSlider({
+    super.key,
+    required this.words,
+    required this.onPageChanged,
+  });
 
   @override
   State<StatefulWidget> createState() => _LearnCarouselSliderState();
@@ -74,7 +75,7 @@ class LearnCarouselSlider extends StatefulWidget {
 
 class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
   final CarouselController _carouselController = CarouselController();
-
+  int currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -125,11 +126,14 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
               height: 400,
               enlargeCenterPage: true,
               enableInfiniteScroll: false,
+              autoPlay: false,
               onPageChanged: (index, reason) {
-                setState(() {
-                  widget.pageIndex = index;
-                  widget.is_finished = true;
-                });
+                  print(index);
+                  if (currentPage != index) {
+                    currentPage = index;
+                    widget.onPageChanged(index);
+                  }
+
               }
           ),
         ),
