@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +22,7 @@ class QuizCarouselSlider extends StatefulWidget {
 
 class _QuizCarouselSliderState extends State<QuizCarouselSlider> {
   int currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -62,19 +62,26 @@ class _QuizCarouselSliderState extends State<QuizCarouselSlider> {
           )).toList(),
           carouselController: widget.controller,
           options: CarouselOptions(
-              height: 250,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              autoPlay: false,
-              onPageChanged: (index, reason) {
-                if (currentPage != index) {
+            height: 250,
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+            autoPlay: false,
+            onPageChanged: (index, reason) {
+              if (index > currentPage) {
+                setState(() {
                   currentPage = index;
-                  widget.onPageChanged(index);
+                });
+                widget.onPageChanged(index);
+              } else {
+
+                if (currentPage != 0) {
+                  widget.controller.jumpToPage(currentPage);
                 }
               }
+            },
           ),
         ),
-          ],
-        );
+      ],
+    );
   }
 }

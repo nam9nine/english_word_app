@@ -39,10 +39,20 @@ class WordRepository {
 
   Future<void> updateWrongAnswer(String? correctWord, String category) async {
     var db = await _databaseHelper.database;
-   var result = await db.update(
+    await db.update(
       'words',
       {'isWrong': 1},
       where: 'meaning = ? AND category = ?',
+      whereArgs: [correctWord, category],
+    );
+  }
+  Future<void> updateCorrectAnswer(String? correctWord, String category) async {
+    var db = await _databaseHelper.database;
+
+    await db.update(
+      'words',
+      {'isWrong' : 0},
+      where : 'meaning = ? AND category = ?',
       whereArgs: [correctWord, category],
     );
   }

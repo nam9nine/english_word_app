@@ -47,5 +47,4 @@ class DatabaseHelper {
       print('데이터베이스 <- 단어 입력 오류 word : $e');
     }
   }
-
 }

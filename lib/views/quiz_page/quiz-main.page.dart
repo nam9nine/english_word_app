@@ -8,7 +8,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 class QuizMainPage extends StatefulWidget {
   final WordRepository repository;
 
-  const QuizMainPage({super.key, required this.repository});
+  QuizMainPage({super.key, required this.repository});
 
   @override
   State<StatefulWidget> createState() {
