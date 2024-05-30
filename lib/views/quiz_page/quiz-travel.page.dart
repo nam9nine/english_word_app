@@ -16,16 +16,16 @@ class QuizTravelPage extends StatefulWidget {
 
 class _QuizTravelPageState extends State<QuizTravelPage> {
   late List<Word> allWords;
+  late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
   late CarouselController _carouselController;
+
   final FocusNode focusNode = FocusNode();
-  final ValueNotifier<int> pageIndex = ValueNotifier<int>(0);
-  final ValueNotifier<bool> isFinished = ValueNotifier<bool>(false);
-  late List<Word> showWords = [];
+
   String feedbackMessage = '';
   bool isCorrect = false;
   int correctCount = 0;
-  int currentIndex = 1;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -46,9 +46,7 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
     setState(() {
       feedbackMessage = isCorrect ? '정답!' : '오답 -> 정답 : $showWord';
       this.isCorrect = isCorrect;
-      if (isCorrect) {
-        correctCount++;
-      }
+
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(feedbackMessage),
@@ -76,18 +74,11 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
           padding: const EdgeInsets.all(16.0),
           child: Center(
             child: SingleChildScrollView(
-              child: ValueListenableBuilder<bool>(
-                valueListenable: isFinished,
-                builder: (context, finished, child) {
-                  if(currentIndex == 6){
-                    return _buildResultWidget();
-                  } else {
-                    return _buildQuizWidget();
-                  }
-                },
-              ),
+
+              child: currentIndex == showWords.length ? _buildResultWidget()
+                : _buildQuizWidget(),
             ),
-          ),
+          )
         ),
       ),
     );
@@ -103,7 +94,11 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
   Widget _buildQuizWidget() {
     return Column(
       children: <Widget>[
-        Text('$currentIndex / ${showWords.length}'),
+        Text('${currentIndex + 1} / ${showWords.length}', style: const TextStyle(
+          fontSize: 28,
+          fontWeight: FontWeight.bold,
+          color : Colors.white,
+        ),),
         if (showWords.isEmpty)
           const CircularProgressIndicator()
         else
@@ -112,17 +107,14 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
             controller: _carouselController,
             words: showWords,
             onPageChanged: (index) {
-              pageIndex.value = index;
-              if (pageIndex.value == showWords.length - 1) {
-                isFinished.value = true;
-              }
+              setState((){
+                currentIndex = index;
+              });
             },
           ),
         const SizedBox(height: 20),
-        ValueListenableBuilder<int>(
-          valueListenable: pageIndex,
-          builder: (_, index, __) {
-            return Column(
+
+        Column(
               children: [
                 TextField(
                   controller: answerController,
@@ -137,15 +129,13 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
                     fillColor: Colors.white,
                   ),
                   onSubmitted: (value) {
-                    _handleSubmitted(value, index);
-                    currentIndex++;
+                    _handleSubmitted(value, currentIndex);
                   },
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    currentIndex++;
-                    return _handleSubmitted(answerController.text, index);
+                    return _handleSubmitted(answerController.text, currentIndex);
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -159,9 +149,7 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
                   child: const Text('다음'),
                 ),
               ],
-            );
-          },
-        ),
+        )
       ],
     );
   }
@@ -204,6 +192,7 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
   void _handleSubmitted(String value, int index) {
     String inputValue = value.trim();
     String? correctValue = showWords[index].meaning?.trim();
+
     if (inputValue != correctValue) {
       _checkAnswer(correctValue!, false);
       widget.repository.updateWrongAnswer(correctValue, 'Travel');
@@ -211,10 +200,13 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
       _checkAnswer(correctValue!, true);
       widget.repository.updateCorrectAnswer(correctValue, 'Travel');
     }
-    if (!isFinished.value) {
-      _carouselController.nextPage();
-    }
+
     answerController.clear();
+    if (currentIndex == showWords.length - 1){
+      currentIndex++;
+    }
+    _carouselController.nextPage();
+
   }
 
   @override

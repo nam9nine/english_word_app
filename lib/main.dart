@@ -12,7 +12,7 @@ import 'db/db.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp( EnglishWordApp());
+  runApp( const EnglishWordApp());
 }
 
 class EnglishWordApp extends StatelessWidget {

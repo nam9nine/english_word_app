@@ -1,14 +1,12 @@
 import 'package:english_world/views/quiz_page/quiz-travel.page.dart';
 import 'package:flutter/material.dart';
-import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
-import '../../widget/quiz-carousel.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
 
 class QuizMainPage extends StatefulWidget {
   final WordRepository repository;
 
-  QuizMainPage({super.key, required this.repository});
+  const QuizMainPage({super.key, required this.repository});
 
   @override
   State<StatefulWidget> createState() {

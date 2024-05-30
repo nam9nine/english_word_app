@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
-import '../../widget/learn-carousel.dart';
+
 
 class IncorrectPage extends StatefulWidget {
   final WordRepository repository;

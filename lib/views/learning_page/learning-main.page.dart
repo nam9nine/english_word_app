@@ -1,3 +1,4 @@
+import 'package:english_world/const/category.const.dart';
 import 'package:english_world/views/learning_page/learning-travel.page.dart';
 import 'package:flutter/material.dart';
 import '../../repository/word-repository.dart';
@@ -17,10 +18,24 @@ class _LearnPage extends State<LearnPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Learn Page'),
+        title: const Text("학습 카테고리", style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold
+        )),
+        backgroundColor: Colors.teal[400],
       ),
       body: Container(
         padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0x91a8e6cf),
+              Color(0xFFdcedc1),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         child: GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 10,
@@ -28,32 +43,31 @@ class _LearnPage extends State<LearnPage> {
           children: <Widget>[
             GestureDetector(
               child: Card(
+                color: Colors.teal[300],
                 elevation: 4,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Padding(
-                        padding: const EdgeInsets.only(top : 2.0, bottom: 2.0),
-                        child : Image.asset(
-                          'assets/images/travel_icon.png',
-                          width: 120,
-                          height: 120,
-                          fit: BoxFit.contain,
-                        ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
-                      child: Text(
-                        'Travel',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontFamily: "Pretendard",
-                          fontWeight: FontWeight.w500,
+                child: Container(
+                  child: const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top : 2.0, bottom: 2.0),
+                        child: Icon(Icons.flight, size: 110, color: Colors.white),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
+                        child: Text(
+                          TRAVEL_CONST,
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontFamily: "Pretendard",
+                            fontWeight: FontWeight.w600,
+                            color: Colors.white
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               onTap: () {

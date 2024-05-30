@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-
 import '../model/category-word.model.dart';
 
 class LearnCarouselSlider extends StatefulWidget {

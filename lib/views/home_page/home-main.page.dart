@@ -37,12 +37,12 @@
               Text("6조 영어단어 학습앱", style: TextStyle(color: Colors.white)),
             ],
           ),
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.deepPurple[500],
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.settings),
               onPressed: () {
-                print("Settings tapped!");
+
               },
             ),
           ],
