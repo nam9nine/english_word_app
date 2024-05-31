@@ -71,7 +71,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
       ),
       bottomNavigationBar: TabBar(
         controller: controller,
-        labelColor: Theme.of(context).primaryColor,
+        labelColor: Colors.teal[800],
         unselectedLabelColor: Colors.grey,
         indicatorSize: TabBarIndicatorSize.label,
         tabs: const [

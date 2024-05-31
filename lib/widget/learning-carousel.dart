@@ -70,7 +70,6 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
               enableInfiniteScroll: false,
               autoPlay: false,
               onPageChanged: (index, reason) {
-                print(index);
                 if (currentPage != index) {
                   currentPage = index;
                   widget.onPageChanged(index);

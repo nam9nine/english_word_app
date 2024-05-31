@@ -48,7 +48,6 @@ class WordRepository {
   }
   Future<void> updateCorrectAnswer(String? correctWord, String category) async {
     var db = await _databaseHelper.database;
-
     await db.update(
       'words',
       {'isWrong' : 0},

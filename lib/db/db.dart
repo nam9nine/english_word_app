@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:sqflite/sqflite.dart';
@@ -44,7 +45,7 @@ class DatabaseHelper {
         await db.insert('words', word);
       }
     } catch (e) {
-      print('데이터베이스 <- 단어 입력 오류 word : $e');
+      log('데이터베이스 <- 단어 입력 오류 word : $e');
     }
   }
 }

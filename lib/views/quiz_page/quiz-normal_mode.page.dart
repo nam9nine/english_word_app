@@ -4,17 +4,17 @@ import '../../repository/word-repository.dart';
 import '../../widget/quiz-carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class QuizTravelPage extends StatefulWidget {
+class QuizSubPage extends StatefulWidget {
   final WordRepository repository;
-  const QuizTravelPage({super.key, required this.repository});
+  const QuizSubPage({super.key, required this.repository});
 
   @override
   State<StatefulWidget> createState() {
-    return _QuizTravelPageState();
+    return _QuizSubPageState();
   }
 }
 
-class _QuizTravelPageState extends State<QuizTravelPage> {
+class _QuizSubPageState extends State<QuizSubPage> {
   late List<Word> allWords;
   late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
