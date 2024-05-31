@@ -20,7 +20,7 @@ class _IncorrectPageState extends State<IncorrectPage> {
   }
 
   void _loadWrongWords() async {
-    List<Word> loadedWords = await widget.repository.getWrongAnswer('Travel');
+    List<Word> loadedWords = await widget.repository.getWrongAnswer('여행');
 
       setState(() {
         wrongWords = loadedWords;

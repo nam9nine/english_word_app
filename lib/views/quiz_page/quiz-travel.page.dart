@@ -34,7 +34,7 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
   }
 
   void _init() async {
-    allWords = await widget.repository.getWordsByCategory('Travel');
+    allWords = await widget.repository.getWordsByCategory('여행');
     setState(() {
       showWords = (List.from(allWords)..shuffle()).take(5).toList().cast<Word>();
     });
@@ -44,9 +44,8 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
   void _checkAnswer(String showWord, bool isCorrect) {
     FocusScope.of(context).requestFocus(focusNode);
     setState(() {
-      feedbackMessage = isCorrect ? '정답!' : '오답 -> 정답 : $showWord';
+      feedbackMessage = isCorrect ? '정답!' : '오답';
       this.isCorrect = isCorrect;
-
     });
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(feedbackMessage),
@@ -195,10 +194,12 @@ class _QuizTravelPageState extends State<QuizTravelPage> {
 
     if (inputValue != correctValue) {
       _checkAnswer(correctValue!, false);
-      widget.repository.updateWrongAnswer(correctValue, 'Travel');
+      widget.repository.updateWrongAnswer(correctValue, '여행');
     } else {
       _checkAnswer(correctValue!, true);
-      widget.repository.updateCorrectAnswer(correctValue, 'Travel');
+      widget.repository.updateCorrectAnswer(correctValue, '여행');
+        correctCount++;
+
     }
 
     answerController.clear();

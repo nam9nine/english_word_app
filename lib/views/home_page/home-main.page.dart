@@ -1,7 +1,7 @@
   import 'package:carousel_slider/carousel_slider.dart';
   import 'package:english_world/model/main-category.model.dart';
-  import 'package:english_world/views/learning_page/learning-travel.page.dart';
-  import 'package:english_world/widget/main-carousel.dart';
+  import 'package:english_world/views/learning_page/learning-sub.page.dart';
+  import 'package:english_world/widget/home-main-carousel.dart';
   import 'package:flutter/material.dart';
   import '../../repository/word-repository.dart';
 
@@ -17,7 +17,7 @@
 
   class _HomePageState extends State<HomePage> {
     CarouselController? carouselController;
-    final ValueNotifier<int> pageIndex = ValueNotifier<int>(0);
+    late ValueNotifier<String> category = ValueNotifier<String>('여행');
 
     @override
     void initState() {
@@ -34,18 +34,10 @@
             children: <Widget>[
               Icon(Icons.school, color: Colors.white),
               SizedBox(width: 10),
-              Text("6조 영어단어 학습앱", style: TextStyle(color: Colors.white)),
+              Text("6조 영어단어 학습앱", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
             ],
           ),
           backgroundColor: Colors.deepPurple[500],
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-
-              },
-            ),
-          ],
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -61,23 +53,20 @@
               children: <Widget>[
                 MainCarouselSlider(
                   categories: widget.categories,
-                  onPageChanged: (index){
-                    pageIndex.value = index;
+                  onPageChanged: (value){
+                      category.value = value;
                   },
                 ),
                 const SizedBox(height: 30),
-                ValueListenableBuilder<int>(
-                  valueListenable: pageIndex,
-                  builder: (_, value, __) {
+                ValueListenableBuilder<String>(
+                  valueListenable: category,
+                  builder: (_, category, __) {
                     return ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) {
-                            if (value == 0) {
-                              return TravelWordPage(repository: widget.repository);
-                            }
-                            return widget;
+                              return LearnSubPage(category : category, repository: widget.repository);
                           }),
                         );
                       },

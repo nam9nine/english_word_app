@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
-import '../../widget/learn-carousel.dart';
-import 'learning-main.page.dart';
+import '../../widget/learning-carousel.dart';
 
-class TravelWordPage extends StatefulWidget {
+class LearnSubPage extends StatefulWidget {
   final WordRepository repository;
-  const TravelWordPage({super.key, required this.repository});
+  final String category;
+  const LearnSubPage({super.key, required this.category, required this.repository});
 
   @override
-  _TravelWordPageState createState() => _TravelWordPageState();
+  _LearnSubPageState createState() => _LearnSubPageState();
 }
 
-class _TravelWordPageState extends State<TravelWordPage> {
+class _LearnSubPageState extends State<LearnSubPage> {
 
   final ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
   final ValueNotifier<bool> isFinished = ValueNotifier<bool>(false);
@@ -21,17 +21,33 @@ class _TravelWordPageState extends State<TravelWordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Travel Words'),
+        title: Text(
+            "${widget.category} 학습",
+            style : const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold),),
+        backgroundColor: Colors.teal[400],
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            ValueListenableBuilder<int>(
-              valueListenable: pageIndexNotifier,
-              builder: (_, value, __) {
-                return Padding(
-                  padding: const EdgeInsets.only(top : 20.0, bottom: 5.0),
-                  child: Text(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0x91a8e6cf),
+              Color(0xFFdcedc1),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child : Center(
+          child: Column(
+            children: <Widget>[
+              ValueListenableBuilder<int>(
+                valueListenable: pageIndexNotifier,
+                builder: (_, value, __) {
+                  return Padding(
+                    padding: const EdgeInsets.only(top : 20.0, bottom: 5.0),
+                    child: Text(
                       '${value + 1}/10',
                       style : const TextStyle(
                           color: Colors.black,
@@ -44,7 +60,7 @@ class _TravelWordPageState extends State<TravelWordPage> {
             ),
 
             FutureBuilder<List<Word>>(
-              future: widget.repository.getWordsByCategory('Travel'),
+              future: widget.repository.getWordsByCategory(widget.category),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   if (snapshot.hasError) {
@@ -73,16 +89,19 @@ class _TravelWordPageState extends State<TravelWordPage> {
                   return Visibility(
                     visible: value,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 10.0, bottom: 3.0),
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 3.0),
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => LearnPage(repository: widget.repository),
-                          ));
+                            Navigator.of(context).pop();
                         },
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white, backgroundColor: Colors.teal[400],
+                          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+                        ),
                         child: const Text(
                           "학습 완료!",
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+
                         ),
                       ),
                     ),
@@ -91,6 +110,7 @@ class _TravelWordPageState extends State<TravelWordPage> {
           ],
         ),
       ),
+      )
     );
   }
 

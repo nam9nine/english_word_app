@@ -47,7 +47,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
     controller = TabController(length: 4, vsync: this);
     categories.add(Category(name: '여행', imagePath: 'assets/images/travel_banner.jpg'));
     categories.add(Category(name: '식당', imagePath: 'assets/images/restaurant_banner.jpg'));
-    categories.add(Category(name: '일상 생활', imagePath: 'assets/images/daily-life_banner.jpg'));
+    categories.add(Category(name: '일상생활', imagePath: 'assets/images/daily-life_banner.jpg'));
     repository = WordRepository(DatabaseHelper());
   }
 
@@ -64,7 +64,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         controller: controller,
         children: <Widget>[
           HomePage(categories: categories, repository : repository),
-          LearnPage(repository: repository),
+          LearnMainPage(categories : categories, repository: repository),
           QuizMainPage(repository: repository),
           IncorrectPage(repository: repository),
         ],

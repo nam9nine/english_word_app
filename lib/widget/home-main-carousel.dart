@@ -4,7 +4,7 @@ import '../model/main-category.model.dart';
 
 class MainCarouselSlider extends StatefulWidget {
   final List<Category> categories;
-  final void Function(int) onPageChanged;
+  final void Function(String) onPageChanged;
 
   const MainCarouselSlider({super.key, required this.categories, required this.onPageChanged});
 
@@ -53,7 +53,7 @@ class _MainCarouselSlider extends State<MainCarouselSlider> {
           enlargeCenterPage: true,
           autoPlay: true,
           onPageChanged : (index, reason) {
-            widget.onPageChanged(index);
+            widget.onPageChanged(widget.categories[index].name);
           }
       ),
     );
