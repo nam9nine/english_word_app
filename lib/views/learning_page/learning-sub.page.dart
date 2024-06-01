@@ -13,10 +13,23 @@ class LearnSubPage extends StatefulWidget {
 }
 
 class _LearnSubPageState extends State<LearnSubPage> {
+  bool isFinished = false;
+  int pageIndex = 0;
+  late List<Word> showList = [];
 
-  final ValueNotifier<int> pageIndexNotifier = ValueNotifier<int>(0);
-  final ValueNotifier<bool> isFinished = ValueNotifier<bool>(false);
+  @override
+  @override
+  void initState() {
+    super.initState();
+   _init();
+  }
 
+  _init () async {
+    List<Word> loadList = await widget.repository.getWordsByCategory(widget.category);
+    setState(() {
+      showList = loadList;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,71 +55,51 @@ class _LearnSubPageState extends State<LearnSubPage> {
         child : Center(
           child: Column(
             children: <Widget>[
-              ValueListenableBuilder<int>(
-                valueListenable: pageIndexNotifier,
-                builder: (_, value, __) {
-                  return Padding(
+                 Padding(
                     padding: const EdgeInsets.only(top : 20.0, bottom: 5.0),
                     child: Text(
-                      '${value + 1}/10',
+                      '${pageIndex + 1}/${showList.length}',
                       style : const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 30
                       ),
                   ),
-                );
-              },
-            ),
-
-            FutureBuilder<List<Word>>(
-              future: widget.repository.getWordsByCategory(widget.category),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.hasError) {
-                    return Center(child: Text("Error: ${snapshot.error}"));
+                 ),
+              showList.isEmpty ? const CircularProgressIndicator()
+              : LearnCarouselSlider(
+                words: showList,
+                onPageChanged: (index) {
+                  setState(() {
+                    pageIndex = index;
+                  });
+                  if (pageIndex + 1 == showList.length) {
+                    setState(() {
+                      isFinished = true;
+                    });
                   }
-                  if (snapshot.data!.isEmpty) {
-                    return const Center(child: Text("단어 없음"));
-                  }
-                  return LearnCarouselSlider(
-                    words: snapshot.data!,
-                    onPageChanged: (index) {
-                      pageIndexNotifier.value = index;
-                      if (pageIndexNotifier.value == 9) {
-                        isFinished.value = true;
-                      }
-                    },
-                  );
-                } else {
-                  return const CircularProgressIndicator();
                 }
-              },
-            ),
-            ValueListenableBuilder<bool>(
-                valueListenable: isFinished,
-                builder: (_, value, __){
-                  return Visibility(
-                    visible: value,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 16.0, bottom: 3.0),
-                      child: ElevatedButton(
-                        onPressed: () {
-                            Navigator.of(context).pop();
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Colors.teal[400],
+              ),
+
+              Visibility(
+                visible: isFinished,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 3.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      },
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.teal[400],
                           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
                         ),
-                        child: const Text(
-                          "학습 완료!",
-                          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-
+                    child: const Text(
+                      "학습 완료!",
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ),
                     ),
-                  );
-                }),
+                  ),
           ],
         ),
       ),
@@ -116,7 +109,6 @@ class _LearnSubPageState extends State<LearnSubPage> {
 
   @override
   void dispose() {
-    pageIndexNotifier.dispose();
     super.dispose();
   }
 }

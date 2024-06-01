@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-AppBar AppBarWidget (String title) {
+AppBar AppBarWidget (String title, {MaterialAccentColor? color}) {
   return AppBar(
     title:  Row(
       mainAxisSize: MainAxisSize.min,
@@ -14,7 +14,7 @@ AppBar AppBarWidget (String title) {
         )),
       ],
     ),
-    backgroundColor: Colors.teal[500],
+    backgroundColor: color ?? Colors.teal[500],
   );
 }
 

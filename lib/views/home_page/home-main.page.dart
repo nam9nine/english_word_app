@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   CarouselController? carouselController;
-  late ValueNotifier<String> category = ValueNotifier<String>('여행');
+  String category = "여행";
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xff3bb5ab), // 진한 초록
+              Color(0xff3bb5ab),
               Color(0xFFdcedc1),
             ],
             begin: Alignment.topLeft,
@@ -48,14 +48,13 @@ class _HomePageState extends State<HomePage> {
               MainCarouselSlider(
                 categories: widget.categories,
                 onPageChanged: (value){
-                  category.value = value;
+                  setState(() {
+                    category = value;
+                  });
                 },
               ),
               const SizedBox(height: 30),
-              ValueListenableBuilder<String>(
-                valueListenable: category,
-                builder: (_, category, __) {
-                  return ElevatedButton(
+              ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -72,10 +71,7 @@ class _HomePageState extends State<HomePage> {
                         fontSize: 20,
                         fontWeight: FontWeight.bold
                     )),
-                  );
-                },
-              ),
-
+                  ),
             ],
           ),
         ),

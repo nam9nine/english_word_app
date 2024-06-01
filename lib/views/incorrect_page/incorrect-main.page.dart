@@ -57,7 +57,7 @@ class _IncorrectPageState extends State<IncorrectPage> {
                       children: [
                         Text(
                           wrongWords[index].english,
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),

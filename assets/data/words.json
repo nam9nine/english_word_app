@@ -12,7 +12,7 @@
   {"english": "Wake up", "meaning": "일어나다", "category": "일상생활", "isWrong": false},
   {"english": "Get up", "meaning": "(침대에서) 일어나다", "category": "일상생활", "isWrong": false},
   {"english": "Brush teeth", "meaning": "이를 닦다", "category": "일상생활", "isWrong": false},
-  {"english": "Wash face", "meaning": "세수하다", "category": "알상생활", "isWrong": false},
+  {"english": "Wash face", "meaning": "세수하다", "category": "일상생활", "isWrong": false},
   {"english": "Take a shower", "meaning": "샤워하다", "category": "일상생활", "isWrong": false},
   {"english": "Get dressed", "meaning": "옷을 입다", "category": "일상생활", "isWrong": false},
   {"english": "Eat breakfast", "meaning": "아침을 먹다", "category": "일상생활", "isWrong": false},

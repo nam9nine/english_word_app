@@ -1,20 +1,22 @@
+import 'package:english_world/widget/util.widget.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
 import '../../widget/quiz-carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-class QuizSubPage extends StatefulWidget {
+class QuizNormalPage extends StatefulWidget {
   final WordRepository repository;
-  const QuizSubPage({super.key, required this.repository});
+  final String category;
+  const QuizNormalPage({super.key, required this.category, required this.repository});
 
   @override
   State<StatefulWidget> createState() {
-    return _QuizSubPageState();
+    return _QuizNormalPageState();
   }
 }
 
-class _QuizSubPageState extends State<QuizSubPage> {
+class _QuizNormalPageState extends State<QuizNormalPage> {
   late List<Word> allWords;
   late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
@@ -34,7 +36,7 @@ class _QuizSubPageState extends State<QuizSubPage> {
   }
 
   void _init() async {
-    allWords = await widget.repository.getWordsByCategory('여행');
+    allWords = await widget.repository.getWordsByCategory(widget.category);
     setState(() {
       showWords = (List.from(allWords)..shuffle()).take(5).toList().cast<Word>();
     });
@@ -57,14 +59,12 @@ class _QuizSubPageState extends State<QuizSubPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Travel Quiz', style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.deepPurple,
-      ),
+      appBar: AppBarWidget('${widget.category} 퀴즈'),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.purple, Colors.blueAccent],
+            colors: [ Color(0xff3bb5ab),
+              Color(0xFFdcedc1),],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -123,6 +123,11 @@ class _QuizSubPageState extends State<QuizSubPage> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12.0),
+                      borderSide: const BorderSide(color: Colors.black, width: 1.5),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                      borderSide: const BorderSide(color: Colors.teal, width: 1.5),
                     ),
                     filled: true,
                     fillColor: Colors.white,
@@ -138,7 +143,7 @@ class _QuizSubPageState extends State<QuizSubPage> {
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.teal[400],
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
