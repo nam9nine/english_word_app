@@ -39,7 +39,7 @@ class _LearnPage extends State<LearnMainPage> {
           mainAxisSpacing: 10,
           children: <Widget>[
             ...widget.categories.map((category){
-              return LearnMainCard(category: category.name, repository: widget.repository,);
+              return LearnMainCard(category: category, repository: widget.repository,);
             })
         ],
         ),

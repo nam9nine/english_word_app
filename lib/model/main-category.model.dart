@@ -1,8 +1,10 @@
 
+import 'package:flutter/cupertino.dart';
+
 class Category {
   String name;
   String imagePath;
-  String? iconPath;
+  IconData? iconPath;
   Category({
     required this.name,
     required this.imagePath,

@@ -52,7 +52,7 @@ class _QuizCarouselSliderState extends State<QuizCarouselSlider> {
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                        color: Colors.teal
                     ),
                   ),
                 ],

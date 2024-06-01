@@ -1,5 +1,5 @@
 import 'package:english_world/model/main-category.model.dart';
-import 'package:english_world/widget/quiz-main-widget.dart';
+import 'package:english_world/widget/quiz-main_widget.dart';
 import 'package:flutter/material.dart';
 import '../../repository/word-repository.dart';
 import 'package:english_world/widget/util.widget.dart';

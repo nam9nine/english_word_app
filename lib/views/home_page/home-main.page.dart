@@ -2,7 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:english_world/model/main-category.model.dart';
 import 'package:english_world/views/learning_page/learning-sub.page.dart';
 import 'package:english_world/widget/util.widget.dart';
-import 'package:english_world/widget/home-main-carousel.dart';
+import 'package:english_world/widget/home-carousel.dart';
 import 'package:flutter/material.dart';
 import '../../repository/word-repository.dart';
 

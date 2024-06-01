@@ -1,10 +1,11 @@
 
+import 'package:english_world/model/main-category.model.dart';
 import 'package:english_world/views/learning_page/learning-sub.page.dart';
 import 'package:flutter/material.dart';
 import '../repository/word-repository.dart';
 
 class LearnMainCard extends StatefulWidget {
-  final String category;
+  final Category category;
   final WordRepository repository;
   const LearnMainCard({super.key, required this.category, required this.repository});
 
@@ -28,14 +29,12 @@ class _LearnMainCard extends State<LearnMainCard> {
           children: <Widget>[
             Padding(
               padding: const EdgeInsets.only(top : 2.0, bottom: 2.0),
-              child: widget.category == "여행" ? const Icon(Icons.flight_rounded, size: 110, color: Colors.white) :
-                  widget.category == "식당" ? const Icon(Icons.restaurant_rounded, size: 110, color: Colors.white) :
-                      widget.category == "일상생활" ? const Icon(Icons.home_rounded, size: 110, color: Colors.white) : null
+              child: Icon(widget.category.iconPath, size: 110, color: Colors.white)
             ),
             Padding(
               padding: const EdgeInsets.only(top: 3.0, bottom: 3.0),
               child: Text(
-                widget.category,
+                widget.category.name,
                 style: const TextStyle(
                     fontSize: 26,
                     fontFamily: "Pretendard",
@@ -50,7 +49,7 @@ class _LearnMainCard extends State<LearnMainCard> {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => LearnSubPage(category : widget.category, repository: widget.repository)),
+          MaterialPageRoute(builder: (context) => LearnSubPage(category : widget.category.name, repository: widget.repository)),
         );
       },
     );

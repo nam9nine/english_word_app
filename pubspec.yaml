@@ -64,6 +64,9 @@ flutter:
     - assets/images/travel_banner.jpg
     - assets/images/restaurant_banner.jpg
     - assets/images/daily-life_banner.jpg
+    - assets/images/car_banner.jpg
+    - assets/images/school_banner.jpg
+    - assets/images/family_banner.jpg
   fonts:
     - family: Pretendard
       fonts:

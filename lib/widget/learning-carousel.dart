@@ -48,7 +48,7 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.blueAccent
+                        color: Colors.teal
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -87,7 +87,7 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
                 curve: Curves.easeInOut,
               ),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue, backgroundColor: Colors.white, // 아이콘 색상
+                foregroundColor: Colors.teal, backgroundColor: Colors.white, // 아이콘 색상
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(15),
                 elevation: 4, // 버튼의 그림자
@@ -102,7 +102,7 @@ class _LearnCarouselSliderState extends State<LearnCarouselSlider> {
                 curve: Curves.easeInOut,
               ),
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.blue, backgroundColor: Colors.white,
+                foregroundColor: Colors.teal, backgroundColor: Colors.white,
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(15),
                 elevation: 4,

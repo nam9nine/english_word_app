@@ -45,9 +45,36 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     controller = TabController(length: 4, vsync: this);
-    categories.add(Category(name: '여행', imagePath: 'assets/images/travel_banner.jpg'));
-    categories.add(Category(name: '식당', imagePath: 'assets/images/restaurant_banner.jpg'));
-    categories.add(Category(name: '일상생활', imagePath: 'assets/images/daily-life_banner.jpg'));
+    categories.add(Category(
+        name: '여행',
+        imagePath: 'assets/images/travel_banner.jpg',
+        iconPath: Icons.flight_rounded,
+    ));
+    categories.add(Category(
+        name: '식당',
+        imagePath: 'assets/images/restaurant_banner.jpg',
+        iconPath: Icons.restaurant_rounded,
+    ));
+    categories.add(Category(
+        name: '일상생활',
+        imagePath: 'assets/images/daily-life_banner.jpg',
+        iconPath: Icons.home_rounded
+    ));
+    categories.add(Category(
+        name: '가족',
+        imagePath: 'assets/images/family_banner.jpg',
+        iconPath: Icons.family_restroom_rounded,
+    ));
+    categories.add(Category(
+        name: '학교',
+        imagePath: 'assets/images/school_banner.jpg',
+        iconPath: Icons.school_rounded
+    ));
+    categories.add(Category(
+        name: '교통',
+        imagePath: 'assets/images/car_banner.jpg',
+        iconPath: Icons.car_crash_rounded
+    ));
     repository = WordRepository(DatabaseHelper());
   }
 

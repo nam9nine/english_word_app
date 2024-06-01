@@ -14,7 +14,7 @@ class IncorrectPage extends StatefulWidget {
 
 class _IncorrectPageState extends State<IncorrectPage> {
   late List<Word> wrongWords = [];
-  bool showMeaning = false; // 단어 뜻 표시 여부를 나타내는 변수
+  bool showMeaning = false;
 
   @override
   void initState() {
