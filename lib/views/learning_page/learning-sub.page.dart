@@ -1,3 +1,4 @@
+import 'package:english_world/widget/util-widget.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
@@ -35,34 +36,26 @@ class _LearnSubPageState extends State<LearnSubPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            "${widget.category} 학습",
+            "${widget.category} 단어 학습",
             style : const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold),),
         backgroundColor: Colors.teal[400],
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0x91a8e6cf),
-              Color(0xFFdcedc1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+
+        decoration: BackgroundColor(),
         child : Center(
           child: Column(
             children: <Widget>[
                  Padding(
-                    padding: const EdgeInsets.only(top : 20.0, bottom: 5.0),
+                    padding: const EdgeInsets.only(top : 45.0, bottom: 5.0),
                     child: Text(
                       '${pageIndex + 1}/${showList.length}',
                       style : const TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 30
+                          fontSize: 35
                       ),
                   ),
                  ),
@@ -84,7 +77,7 @@ class _LearnSubPageState extends State<LearnSubPage> {
               Visibility(
                 visible: isFinished,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 16.0, bottom: 3.0),
+                  padding: const EdgeInsets.only(top: 30.0, bottom: 3.0),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pop();

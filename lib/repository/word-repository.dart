@@ -21,11 +21,11 @@ class WordRepository {
     return result;
   }
 
-  Future<List<Word>> getWrongAnswer(String category) async {
+  Future<List<Word>> getWrongAnswer() async {
     final db = await _databaseHelper.database;
     final result = await db.query('words',
-        where : 'category = ? AND isWrong = ?',
-        whereArgs: [category, 1]
+        where : 'isWrong = ?',
+        whereArgs: [1],
     );
     List<Word> words = result.map((map) => Word.fromMap(map)).toList();
     return words;
@@ -37,22 +37,22 @@ class WordRepository {
     await deleteDatabase(path);
   }
 
-  Future<void> updateWrongAnswer(String? correctWord, String category) async {
+  Future<void> updateWrongAnswer(String? correctWord) async {
     var db = await _databaseHelper.database;
     await db.update(
       'words',
       {'isWrong': 1},
-      where: 'meaning = ? AND category = ?',
-      whereArgs: [correctWord, category],
+      where: 'meaning = ?',
+      whereArgs: [correctWord],
     );
   }
-  Future<void> updateCorrectAnswer(String? correctWord, String category) async {
+  Future<void> updateCorrectAnswer(String correctWord) async {
     var db = await _databaseHelper.database;
     await db.update(
       'words',
       {'isWrong' : 0},
       where : 'meaning = ? AND category = ?',
-      whereArgs: [correctWord, category],
+      whereArgs: [correctWord],
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:english_world/model/main-category.model.dart';
 import 'package:english_world/views/learning_page/learning-sub.page.dart';
-import 'package:english_world/widget/util.widget.dart';
+import 'package:english_world/widget/util-widget.dart';
 import 'package:english_world/widget/home-carousel.dart';
 import 'package:flutter/material.dart';
 import '../../repository/word-repository.dart';
@@ -31,16 +31,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBarWidget('6조 영어단어 학습'),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xff3bb5ab),
-              Color(0xFFdcedc1),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        decoration: BackgroundColor(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

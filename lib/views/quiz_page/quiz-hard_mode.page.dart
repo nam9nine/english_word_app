@@ -1,4 +1,4 @@
-import 'package:english_world/widget/util.widget.dart';
+import 'package:english_world/widget/util-widget.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
@@ -201,10 +201,10 @@ class _QuizHardPageState extends State<QuizHardPage> {
 
     if (inputValue != correctValue) {
       _checkAnswer(correctValue!, false);
-      widget.repository.updateWrongAnswer(correctValue, '여행');
+      widget.repository.updateWrongAnswer(correctValue);
     } else {
       _checkAnswer(correctValue!, true);
-      widget.repository.updateCorrectAnswer(correctValue, '여행');
+      widget.repository.updateCorrectAnswer(correctValue);
       correctCount++;
 
     }

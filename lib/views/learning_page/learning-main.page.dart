@@ -3,7 +3,7 @@ import 'package:english_world/widget/learning-main_card.dart';
 import 'package:flutter/material.dart';
 import '../../model/main-category.model.dart';
 import '../../repository/word-repository.dart';
-import '../../widget/util.widget.dart';
+import '../../widget/util-widget.dart';
 
 class LearnMainPage extends StatefulWidget {
   final WordRepository repository;
@@ -15,14 +15,13 @@ class LearnMainPage extends StatefulWidget {
     return _LearnPage();
   }
 }
-
 class _LearnPage extends State<LearnMainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget('단어 학습'),
       body: Container(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left : 20, right : 20, top : 60),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [

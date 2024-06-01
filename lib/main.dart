@@ -93,7 +93,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
           HomePage(categories: categories, repository : repository),
           LearnMainPage(categories : categories, repository: repository),
           QuizMainPage(categories : categories, repository: repository),
-          IncorrectPage(repository: repository),
+          IncorrectMainPage(repository: repository),
         ],
       ),
       bottomNavigationBar: TabBar(

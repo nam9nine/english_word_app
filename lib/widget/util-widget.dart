@@ -18,3 +18,15 @@ AppBar AppBarWidget (String title, {MaterialAccentColor? color}) {
   );
 }
 
+BoxDecoration BackgroundColor() {
+  return const BoxDecoration(
+    gradient: LinearGradient(
+      colors: [
+        Color(0xff3bb5ab),
+        Color(0xFFdcedc1),
+      ],
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ),
+  );
+}

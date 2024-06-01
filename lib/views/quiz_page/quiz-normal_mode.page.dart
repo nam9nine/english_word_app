@@ -1,4 +1,4 @@
-import 'package:english_world/widget/util.widget.dart';
+import 'package:english_world/widget/util-widget.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
@@ -27,7 +27,7 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
   String feedbackMessage = '';
   bool isCorrect = false;
   int correctCount = 0;
-  int currentIndex = 0;
+  int cardIndex = 0;
 
   @override
   void initState() {
@@ -61,20 +61,16 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
     return Scaffold(
       appBar: AppBarWidget('${widget.category} 퀴즈'),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [ Color(0xff3bb5ab),
-              Color(0xFFdcedc1),],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
+        decoration: BackgroundColor(),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Center(
+            // TextField 클릭 시 키보드가 올라오는데 그때 ui들이 범위에 벗어나게 됨
+            // -> SingleChildScrollView 추가
             child: SingleChildScrollView(
-
-              child: currentIndex == showWords.length ? _buildResultWidget()
+              // 카드 인덱스가 나열된 단어들 갯수와 같으면 _buildResultWidget로 결과 페이지로 이동
+              // 다르다면 _buildQuizWidget 학습 페이지 유지
+              child: cardIndex == showWords.length ? _buildResultWidget()
                 : _buildQuizWidget(),
             ),
           )
@@ -83,6 +79,7 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
     );
   }
 
+  // 최종 결과 스코어를 보여주는 Widget
   Widget _buildScoreWidget() {
     return Text(
       'Score ${20 * correctCount}',
@@ -93,7 +90,7 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
   Widget _buildQuizWidget() {
     return Column(
       children: <Widget>[
-        Text('${currentIndex + 1} / ${showWords.length}', style: const TextStyle(
+        Text('${cardIndex + 1} / ${showWords.length}', style: const TextStyle(
           fontSize: 28,
           fontWeight: FontWeight.bold,
           color : Colors.white,
@@ -107,7 +104,7 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
             words: showWords,
             onPageChanged: (index) {
               setState((){
-                currentIndex = index;
+                cardIndex = index;
               });
             },
           ),
@@ -133,13 +130,14 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
                     fillColor: Colors.white,
                   ),
                   onSubmitted: (value) {
-                    _handleSubmitted(value, currentIndex);
+                    _handleSubmitted(value, cardIndex);
                   },
                 ),
                 const SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    return _handleSubmitted(answerController.text, currentIndex);
+                    // 사용자가 다음 버튼 혹은 엔터 키보드를 누를 시 _handleSubmitted 호출
+                    return _handleSubmitted(answerController.text, cardIndex);
                   },
                   style: ElevatedButton.styleFrom(
                     foregroundColor: Colors.white,
@@ -192,24 +190,31 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
       ],
     );
   }
-
+  // 사용자가 입력한 값 value 변수와 현재 카드 위치를 알려주는 index 변수
   void _handleSubmitted(String value, int index) {
+    // 사용자 입력값
     String inputValue = value.trim();
+    // 정답
     String? correctValue = showWords[index].meaning?.trim();
 
-    if (inputValue != correctValue) {
-      _checkAnswer(correctValue!, false);
-      widget.repository.updateWrongAnswer(correctValue, '여행');
-    } else {
-      _checkAnswer(correctValue!, true);
-      widget.repository.updateCorrectAnswer(correctValue, '여행');
-        correctCount++;
 
+    if (inputValue != correctValue) {
+      // 오답 처리
+      // 스낵바로 답 여부 체크 표시
+      _checkAnswer(correctValue!, false);
+      widget.repository.updateWrongAnswer(correctValue);
+    } else {
+      // 정답 처리
+      // 스낵바로 답 여부 체크 표시
+      _checkAnswer(correctValue!, true);
+      widget.repository.updateCorrectAnswer(correctValue);
+      // 스코어 점수 집계를 위해 correctCount 변수 증가
+      correctCount++;
     }
 
     answerController.clear();
-    if (currentIndex == showWords.length - 1){
-      currentIndex++;
+    if (cardIndex == showWords.length - 1){
+      cardIndex++;
     }
     _carouselController.nextPage();
 

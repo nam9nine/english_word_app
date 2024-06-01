@@ -30,7 +30,7 @@
   {"english": "Language", "meaning": "언어", "category": "여행", "isWrong": false},
   {"english": "Culture", "meaning": "문화", "category": "여행", "isWrong": false},
   {"english": "Family", "meaning": "가족", "category": "가족", "isWrong": false},
-  {"english": "Mother", "meaning": "어머니", "category": "가", "isWrong": false},
+  {"english": "Mother", "meaning": "어머니", "category": "가족", "isWrong": false},
   {"english": "Father", "meaning": "아버지", "category": "가족", "isWrong": false},
   {"english": "Brother", "meaning": "형제", "category": "가족", "isWrong": false},
   {"english": "Sister", "meaning": "자매", "category": "가족", "isWrong": false},
