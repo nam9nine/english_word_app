@@ -1,9 +1,13 @@
-import 'package:english_world/widget/util-widget.dart';
+import 'dart:async';
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
 import '../../widget/quiz-carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../../widget/util-widget.dart';
 
 class QuizHardPage extends StatefulWidget {
   final WordRepository repository;
@@ -21,6 +25,10 @@ class _QuizHardPageState extends State<QuizHardPage> {
   late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
   late CarouselController _carouselController;
+  Timer? _timer;
+  int _remainingTime = 5;
+  int baseScore = 40;
+  int timeBonus = 2;
 
   final FocusNode focusNode = FocusNode();
 
@@ -28,11 +36,13 @@ class _QuizHardPageState extends State<QuizHardPage> {
   bool isCorrect = false;
   int correctCount = 0;
   int currentIndex = 0;
+  int totalScore = 0;
 
   @override
   void initState() {
     super.initState();
     _init();
+    focusNode.addListener(_handleFocusChange);
   }
 
   void _init() async {
@@ -43,8 +53,35 @@ class _QuizHardPageState extends State<QuizHardPage> {
     _carouselController = CarouselController();
   }
 
+  void _handleFocusChange() {
+    if (focusNode.hasFocus) {
+      _startTimer();
+    }
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    setState(() {
+      _remainingTime = 5;
+    });
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remainingTime > 0) {
+        setState(() {
+          _remainingTime--;
+        });
+      } else {
+        _handleTimeout();
+      }
+    });
+  }
+
+  void _handleTimeout() {
+    _handleSubmitted('', currentIndex);
+  }
+
   void _checkAnswer(String showWord, bool isCorrect) {
     FocusScope.of(context).requestFocus(focusNode);
+
     setState(() {
       feedbackMessage = isCorrect ? '정답!' : '오답';
       this.isCorrect = isCorrect;
@@ -54,6 +91,7 @@ class _QuizHardPageState extends State<QuizHardPage> {
       backgroundColor: isCorrect ? Colors.green : Colors.red,
       duration: const Duration(milliseconds: 500),
     ));
+    _startTimer();
   }
 
   @override
@@ -65,17 +103,16 @@ class _QuizHardPageState extends State<QuizHardPage> {
           gradient: LinearGradient(
             colors: [
               Color(0xffe15757), // Soft red
-              Color(0xffa8d1aa), // Muted
+              Color(0xffa8d1aa), // Muted green
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
         child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(right: 16, left: 16, top: 5),
             child: Center(
               child: SingleChildScrollView(
-
                 child: currentIndex == showWords.length ? _buildResultWidget()
                     : _buildQuizWidget(),
               ),
@@ -87,9 +124,17 @@ class _QuizHardPageState extends State<QuizHardPage> {
 
   Widget _buildScoreWidget() {
     return Text(
-      'Score ${20 * correctCount}',
+      'Score $totalScore',
       style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
     );
+  }
+
+  Widget _buildTimerWidget() {
+    return Text('남은 시간: $_remainingTime 초', style: const TextStyle(
+      fontSize: 24,
+      fontWeight: FontWeight.bold,
+      color : Colors.white,
+    ),);
   }
 
   Widget _buildQuizWidget() {
@@ -100,21 +145,21 @@ class _QuizHardPageState extends State<QuizHardPage> {
           fontWeight: FontWeight.bold,
           color : Colors.white,
         ),),
-        if (showWords.isEmpty)
-          const CircularProgressIndicator()
-        else
-          QuizCarouselSlider(
-            answerController: answerController,
-            controller: _carouselController,
-            words: showWords,
-            onPageChanged: (index) {
-              setState((){
-                currentIndex = index;
-              });
-            },
-          ),
-        const SizedBox(height: 20),
-
+        const SizedBox(height: 10),
+        _buildTimerWidget(),
+        const SizedBox(height: 10),
+        showWords.isEmpty ? const CircularProgressIndicator()
+            : QuizCarouselSlider(
+          answerController: answerController,
+          controller: _carouselController,
+          words: showWords,
+          onPageChanged: (index) {
+            setState((){
+              currentIndex = index;
+            });
+          },
+        ),
+        const SizedBox(height: 10),
         Column(
           children: [
             TextField(
@@ -196,6 +241,7 @@ class _QuizHardPageState extends State<QuizHardPage> {
   }
 
   void _handleSubmitted(String value, int index) {
+    _timer?.cancel();
     String inputValue = value.trim();
     String? correctValue = showWords[index].meaning?.trim();
 
@@ -203,24 +249,26 @@ class _QuizHardPageState extends State<QuizHardPage> {
       _checkAnswer(correctValue!, false);
       widget.repository.updateWrongAnswer(correctValue);
     } else {
+      int bonus = _remainingTime * timeBonus;
+      totalScore += baseScore + bonus;
       _checkAnswer(correctValue!, true);
       widget.repository.updateCorrectAnswer(correctValue);
       correctCount++;
-
     }
 
     answerController.clear();
-    if (currentIndex == showWords.length - 1){
+    if (currentIndex == showWords.length - 1) {
       currentIndex++;
     }
     _carouselController.nextPage();
-
   }
 
   @override
   void dispose() {
     answerController.dispose();
+    focusNode.removeListener(_handleFocusChange);
     focusNode.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 }
