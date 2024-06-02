@@ -14,7 +14,6 @@ class WordRepository {
     if (category == null) {
       log('category를 넣어주세요');
     }
-
     final db = await _databaseHelper.database;
     final result = await db.query('words', where: 'category = ?', whereArgs: [category]);
     List<Word> words = result.map((map) => Word.fromMap(map)).toList();
@@ -26,7 +25,6 @@ class WordRepository {
     final result = await db.query('words');
     return result;
   }
-
   Future<List<Word>> getWrongAnswer() async {
     final db = await _databaseHelper.database;
     final result = await db.query(
@@ -38,8 +36,6 @@ class WordRepository {
     List<Word> words = result.map((map) => Word.fromMap(map)).toList();
     return words;
   }
-
-
   Future<void> deleteDatabaseFile() async {
     var databasesPath = await getDatabasesPath();
     String path = join(databasesPath, 'words.db');
@@ -60,7 +56,7 @@ class WordRepository {
     await db.update(
       'words',
       {'isWrong' : 0},
-      where : 'meaning = ? AND category = ?',
+      where : 'meaning = ?',
       whereArgs: [correctWord],
     );
   }

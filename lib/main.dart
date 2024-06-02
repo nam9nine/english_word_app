@@ -32,11 +32,9 @@ class EnglishWordApp extends StatelessWidget {
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
-
   @override
   State<StatefulWidget> createState() => _MainViewState();
 }
-
 class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin {
   TabController? controller;
   List<Category> categories = List.empty(growable: true);
@@ -45,6 +43,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     controller = TabController(length: 4, vsync: this);
+    repository = WordRepository(DatabaseHelper());
     categories.add(Category(
         name: '여행',
         imagePath: 'assets/images/travel_banner.jpg',
@@ -75,7 +74,6 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
         imagePath: 'assets/images/car_banner.jpg',
         iconPath: Icons.car_crash_rounded
     ));
-    repository = WordRepository(DatabaseHelper());
   }
 
   @override

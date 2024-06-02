@@ -78,7 +78,6 @@ class _QuizHardPageState extends State<QuizHardPage> {
 
   void _checkAnswer(String showWord, bool isCorrect) {
     FocusScope.of(context).requestFocus(focusNode);
-
     setState(() {
       feedbackMessage = isCorrect ? '정답!' : '오답';
       this.isCorrect = isCorrect;

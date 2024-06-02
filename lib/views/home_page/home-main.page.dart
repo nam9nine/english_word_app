@@ -25,7 +25,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     carouselController = CarouselController();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -42,7 +42,6 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
         ],
       ),
 
-
       body: Container(
         decoration: BackgroundColor(),
         child: wrongWords.isEmpty
@@ -78,7 +77,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    trailing: const Icon(Icons.arrow_forward, color: Colors.black),
+                    // trailing: const Icon(Icons.arrow_forward, color: Colors.black),
                   ),
                 ),
               );

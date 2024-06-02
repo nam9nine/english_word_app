@@ -204,8 +204,6 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
     String inputValue = value.trim();
     // 정답
     String? correctValue = showWords[index].meaning?.trim();
-
-
     if (inputValue != correctValue) {
       // 오답 처리
       // 스낵바로 답 여부 체크 표시
@@ -219,13 +217,11 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
       // 스코어 점수 집계를 위해 correctCount 변수 증가
       correctCount++;
     }
-
     answerController.clear();
     if (cardIndex == showWords.length - 1){
       cardIndex++;
     }
     _carouselController.nextPage();
-
   }
 
   @override

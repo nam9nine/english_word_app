@@ -24,7 +24,6 @@ class _LearnSubPageState extends State<LearnSubPage> {
     super.initState();
    _init();
   }
-
   _init () async {
     List<Word> loadList = await widget.repository.getWordsByCategory(widget.category);
     setState(() {
@@ -43,7 +42,6 @@ class _LearnSubPageState extends State<LearnSubPage> {
         backgroundColor: Colors.teal[400],
       ),
       body: Container(
-
         decoration: BackgroundColor(),
         child : Center(
           child: Column(
