@@ -243,12 +243,10 @@ class _QuizHardPageState extends State<QuizHardPage> {
 
     if (inputValue != correctValue) {
       _checkAnswer(correctValue!, false);
-      widget.repository.updateWrongAnswer(correctValue);
     } else {
       int bonus = _remainingTime * timeBonus;
       totalScore += baseScore + bonus;
       _checkAnswer(correctValue!, true);
-      widget.repository.updateCorrectAnswer(correctValue);
       correctCount++;
     }
 
