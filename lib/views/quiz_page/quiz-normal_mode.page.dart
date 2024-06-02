@@ -1,3 +1,4 @@
+
 import 'package:english_world/widget/util-widget.dart';
 import 'package:flutter/material.dart';
 import '../../model/category-word.model.dart';
@@ -7,9 +8,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 
 class QuizNormalPage extends StatefulWidget {
   final WordRepository repository;
-  final String category;
-  const QuizNormalPage({super.key, required this.category, required this.repository});
-
+  final String? category;
+  final bool isIncorrectQuiz;
+  const QuizNormalPage({
+    super.key, this.category,
+    required this.repository,
+    this.isIncorrectQuiz = false
+  });
   @override
   State<StatefulWidget> createState() {
     return _QuizNormalPageState();
@@ -21,7 +26,6 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
   late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
   late CarouselController _carouselController;
-
   final FocusNode focusNode = FocusNode();
 
   String feedbackMessage = '';
@@ -35,31 +39,10 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
     _init();
   }
 
-  void _init() async {
-    allWords = await widget.repository.getWordsByCategory(widget.category);
-    setState(() {
-      showWords = (List.from(allWords)..shuffle()).take(5).toList().cast<Word>();
-    });
-    _carouselController = CarouselController();
-  }
-
-  void _checkAnswer(String showWord, bool isCorrect) {
-    FocusScope.of(context).requestFocus(focusNode);
-    setState(() {
-      feedbackMessage = isCorrect ? '정답!' : '오답';
-      this.isCorrect = isCorrect;
-    });
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(feedbackMessage),
-      backgroundColor: isCorrect ? Colors.green : Colors.red,
-      duration: const Duration(milliseconds: 500),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget('${widget.category} 퀴즈'),
+      appBar: AppBarWidget('${widget.category ?? '오답'} 퀴즈'),
       body: Container(
         decoration: BackgroundColor(),
         child: Padding(
@@ -77,6 +60,31 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
         ),
       ),
     );
+  }
+
+  void _init() async {
+    allWords = widget.isIncorrectQuiz ?
+        await widget.repository.getWrongAnswer() :
+        await widget.repository.getWordsByCategory(widget.category!);
+    setState(() {
+      showWords = widget.isIncorrectQuiz ?
+      (List.from(allWords)..shuffle()).take(10).toList().cast<Word>() :
+      (List.from(allWords)..shuffle()).take(5).toList().cast<Word>();
+    });
+    _carouselController = CarouselController();
+  }
+
+  void _checkAnswer(String showWord, bool isCorrect) {
+    FocusScope.of(context).requestFocus(focusNode);
+    setState(() {
+      feedbackMessage = isCorrect ? '정답!' : '오답';
+      this.isCorrect = isCorrect;
+    });
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(feedbackMessage),
+      backgroundColor: isCorrect ? Colors.green : Colors.red,
+      duration: const Duration(milliseconds: 500),
+    ));
   }
 
   // 최종 결과 스코어를 보여주는 Widget

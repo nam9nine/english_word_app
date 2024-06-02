@@ -1,8 +1,8 @@
-import 'package:english_world/widget/util-widget.dart';
+import 'package:english_world/views/quiz_page/quiz-normal_mode.page.dart';
 import 'package:flutter/material.dart';
-// import 'package:glass/glass.dart';
 import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
+import 'package:english_world/widget/util-widget.dart';
 
 class IncorrectMainPage extends StatefulWidget {
   final WordRepository repository;
@@ -10,21 +10,18 @@ class IncorrectMainPage extends StatefulWidget {
   const IncorrectMainPage({super.key, required this.repository});
 
   @override
-  State<StatefulWidget> createState() => _IncorrectMainPageState();
+  State<IncorrectMainPage> createState() => _IncorrectMainPageState();
 }
 
 class _IncorrectMainPageState extends State<IncorrectMainPage> {
   late List<Word> wrongWords = [];
-
-  bool effectEnabled = true;
-
   @override
   void initState() {
     super.initState();
-    _loadWrongWords();
+    _init();
   }
 
-  void _loadWrongWords() async {
+  void _init() async {
     List<Word> loadedWords = await widget.repository.getWrongAnswer();
     setState(() {
       wrongWords = loadedWords;
@@ -35,30 +32,130 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget('단어 오답'),
+
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          // _floatingSortButtonWidget(),
+          const SizedBox(height: 16),
+          _floatingQuizButtonWidget(),
+        ],
+      ),
+
+
       body: Container(
         decoration: BackgroundColor(),
         child: wrongWords.isEmpty
-            ? const Center(child: Text('오답 없음', style: TextStyle(fontSize: 20)))
-            : ListView.builder(
-          itemCount: wrongWords.length,
-          itemBuilder: (context, index) {
-            return Card(
-              color: Colors.white.withOpacity(0.85), // Semi-transparent white
-              margin: const EdgeInsets.all(8),
-              child: ListTile(
-                title: Text(
-                  wrongWords[index].english,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontWeight: FontWeight.bold,
+            ? const Center(child: Text("오답 목록이 비어 있습니다.", style: TextStyle(
+            fontSize: 20,
+            color: Colors.white)))
+            : NotificationListener<ScrollNotification>(
+          onNotification: (ScrollNotification scrollInfo) {
+            return true;
+          },
+          child: ListView.builder(
+            itemCount: wrongWords.length,
+            itemBuilder: (context, index) {
+              if (index == wrongWords.length) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              return Dismissible(
+                key: Key(wrongWords[index].english),
+                onDismissed: (direction) {
+                  setState(() {
+                    wrongWords.removeAt(index);
+                  });
+                },
+                background: Container(color: Colors.red),
+                child: Card(
+                  color: Colors.white.withOpacity(0.85),
+                  margin: const EdgeInsets.all(8),
+                  child: ListTile(
+                    title: Text(
+                      wrongWords[index].english,
+                      style: const TextStyle(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.arrow_forward, color: Colors.black),
                   ),
                 ),
-                trailing: const Icon(Icons.arrow_forward, color: Colors.black54), // Optional navigation icon
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _floatingSortButtonWidget() {
+    return  FloatingActionButton(
+      onPressed: () {
+        if (wrongWords.isEmpty) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('오답 없음'),
+                content: const Text('더 많은 퀴즈를 풀어보세요.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // 다이어로그 닫기
+                    },
+                    child: const Text('확인'),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return QuizNormalPage(repository: widget.repository, isIncorrectQuiz: true);
+              }
+          ));
+        }
+      },
+      tooltip: '오답 시험 시작',
+      backgroundColor: Colors.teal[400],
+      child: const Icon(Icons.quiz_rounded, color: Colors.white,),
+    );
+  }
+
+  Widget _floatingQuizButtonWidget() {
+    return  FloatingActionButton(
+      onPressed: () {
+        if (wrongWords.isEmpty) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('오답 없음'),
+                content: const Text('더 많은 퀴즈를 풀어보세요.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop(); // 다이어로그 닫기
+                    },
+                    child: const Text('확인'),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          Navigator.push(context, MaterialPageRoute(
+              builder: (context) {
+                return QuizNormalPage(repository: widget.repository, isIncorrectQuiz: true);
+              }
+          ));
+        }
+      },
+      tooltip: '오답 시험 시작',
+      backgroundColor: Colors.teal[400],
+      child: const Icon(Icons.quiz_rounded, color: Colors.white,),
     );
   }
 }
