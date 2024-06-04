@@ -58,15 +58,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
               if (index == wrongWords.length) {
                 return const Center(child: CircularProgressIndicator());
               }
-              return Dismissible(
-                key: Key(wrongWords[index].english),
-                onDismissed: (direction) {
-                  setState(() {
-                    wrongWords.removeAt(index);
-                  });
-                },
-                background: Container(color: Colors.red),
-                child: Card(
+              return Card(
                   color: Colors.white.withOpacity(0.85),
                   margin: const EdgeInsets.all(8),
                   child: ListTile(
@@ -78,8 +70,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
                       ),
                     ),
                     // trailing: const Icon(Icons.arrow_forward, color: Colors.black),
-                  ),
-                ),
+                  )
               );
             },
           ),
