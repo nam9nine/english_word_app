@@ -6,6 +6,8 @@ import '../../repository/word-repository.dart';
 import '../../widget/quiz-carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import '../incorrect_page/incorrect-main.page.dart';
+
 class QuizNormalPage extends StatefulWidget {
   final WordRepository repository;
   final String? category;
@@ -164,40 +166,47 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
     );
   }
 
-  Widget _buildResultWidget() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildScoreWidget(),
-        const SizedBox(height : 60),
-        const Text(
-          '퀴즈 완료!',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          '총 ${showWords.length}문제 중 $correctCount문제 맞춤!',
-          style: const TextStyle(fontSize: 18, color: Colors.white),
-        ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blueAccent,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-            textStyle: const TextStyle(fontSize: 16.0),
+    Widget _buildResultWidget() {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildScoreWidget(),
+          const SizedBox(height : 60),
+          const Text(
+            '퀴즈 완료!',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
           ),
-          child: const Text('메인으로 돌아가기'),
-        ),
-      ],
-    );
-  }
+          const SizedBox(height: 20),
+          Text(
+            '총 ${showWords.length}문제 중 $correctCount문제 맞춤!',
+            style: const TextStyle(fontSize: 18, color: Colors.white),
+          ),
+          const SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              widget.isIncorrectQuiz ? Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => IncorrectMainPage(
+                    repository: widget.repository,
+                  ),)
+              ) : null;
+            },
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blueAccent,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              textStyle: const TextStyle(fontSize: 16.0),
+            ),
+            child: const Text('메인으로 돌아가기'),
+          ),
+        ],
+      );
+    }
   // 사용자가 입력한 값 value 변수와 현재 카드 위치를 알려주는 index 변수
   void _handleSubmitted(String value, int index) {
     // 사용자 입력값

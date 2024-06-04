@@ -168,7 +168,7 @@ void _showCategoryDialog(
                   const SizedBox(height: 20),
                   TextButton(
                     onPressed: () {
-                      Navigator.of(context). pop();
+                      Navigator.of(context).pop();
                     },
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.white,
