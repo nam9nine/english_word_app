@@ -90,6 +90,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
 
   Widget _floatingRefreshButtonWidget() {
     return  FloatingActionButton(
+      heroTag: 'refresh_button',
       onPressed: () {
           _init();
       },
@@ -101,6 +102,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
 
   Widget _floatingQuizButtonWidget() {
     return  FloatingActionButton(
+      heroTag: 'quiz_button',
       onPressed: () {
         if (wrongWords.isEmpty) {
           showDialog(
