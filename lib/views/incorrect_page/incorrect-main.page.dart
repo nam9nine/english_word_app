@@ -36,7 +36,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          // _floatingSortButtonWidget(),
+          _floatingRefreshButtonWidget(),
           const SizedBox(height: 16),
           _floatingQuizButtonWidget(),
         ],
@@ -88,38 +88,14 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
     );
   }
 
-  Widget _floatingSortButtonWidget() {
+  Widget _floatingRefreshButtonWidget() {
     return  FloatingActionButton(
       onPressed: () {
-        if (wrongWords.isEmpty) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('오답 없음'),
-                content: const Text('더 많은 퀴즈를 풀어보세요.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop(); // 다이어로그 닫기
-                    },
-                    child: const Text('확인'),
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return QuizNormalPage(repository: widget.repository, isIncorrectQuiz: true);
-              }
-          ));
-        }
+          _init();
       },
-      tooltip: '오답 시험 시작',
+      tooltip: '새로고침',
       backgroundColor: Colors.teal[400],
-      child: const Icon(Icons.quiz_rounded, color: Colors.white,),
+      child: const Icon(Icons.refresh_rounded, color: Colors.white,),
     );
   }
 

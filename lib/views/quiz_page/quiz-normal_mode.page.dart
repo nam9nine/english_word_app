@@ -5,9 +5,6 @@ import '../../model/category-word.model.dart';
 import '../../repository/word-repository.dart';
 import '../../widget/quiz-carousel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-
-import '../incorrect_page/incorrect-main.page.dart';
-
 class QuizNormalPage extends StatefulWidget {
   final WordRepository repository;
   final String? category;
@@ -184,14 +181,7 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop();
-              widget.isIncorrectQuiz ? Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => IncorrectMainPage(
-                    repository: widget.repository,
-                  ),)
-              ) : null;
+              Navigator.pop(context);
             },
             style: ElevatedButton.styleFrom(
               foregroundColor: Colors.white,
