@@ -31,11 +31,13 @@ class _QuizMainPageState extends State<QuizMainPage> {
           child: Column(
             children: [
               Expanded(
+                // 일반 모드 페이지
                 child: NormalMode(
                     widget.repository, context, widget.categories),
               ),
               const SizedBox(height: 25),
               Expanded(
+                //하드 모드 페이지
                 child: HardMode(widget.repository, context, widget.categories),
               ),
             ],

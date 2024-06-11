@@ -43,7 +43,9 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     controller = TabController(length: 4, vsync: this);
+    //repository 객체 생성
     repository = WordRepository(DatabaseHelper());
+    // 초기 카테고리 목록 및 유틸적인 요소 생성
     categories.add(Category(
         name: '여행',
         imagePath: 'assets/images/travel_banner.jpg',

@@ -22,6 +22,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
   }
 
   void _init() async {
+    // 오답처리가 된 단어들을 모두 불러옴
     List<Word> loadedWords = await widget.repository.getWrongAnswer();
     setState(() {
       wrongWords = loadedWords;
@@ -36,6 +37,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
+
           _floatingRefreshButtonWidget(),
           const SizedBox(height: 16),
           _floatingQuizButtonWidget(),
@@ -44,6 +46,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
 
       body: Container(
         decoration: BackgroundColor(),
+        // 오답이 없다면 해당 문구가 나옴
         child: wrongWords.isEmpty
             ? const Center(child: Text("오답 목록이 비어 있습니다.", style: TextStyle(
             fontSize: 20,
@@ -78,7 +81,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
       ),
     );
   }
-
+  // 새로고침 버튼
   Widget _floatingRefreshButtonWidget() {
     return  FloatingActionButton(
       heroTag: 'refresh_button',
@@ -90,7 +93,7 @@ class _IncorrectMainPageState extends State<IncorrectMainPage> {
       child: const Icon(Icons.refresh_rounded, color: Colors.white,),
     );
   }
-
+  // 오답 시험 버튼
   Widget _floatingQuizButtonWidget() {
     return  FloatingActionButton(
       heroTag: 'quiz_button',

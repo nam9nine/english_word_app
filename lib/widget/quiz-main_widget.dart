@@ -7,6 +7,7 @@ import '../views/quiz_page/quiz-normal_mode.page.dart';
 
 Widget NormalMode(WordRepository repository, BuildContext context, List<Category> categories ) {
   return GestureDetector(
+    // 클릭시 Dialog가 뜸
     onTap: () => _showCategoryDialog("일반 모드", repository, context, categories),
     child: Container(
       decoration: BoxDecoration(
@@ -46,6 +47,7 @@ Widget NormalMode(WordRepository repository, BuildContext context, List<Category
 
 Widget HardMode(WordRepository repository, BuildContext context, List<Category> categories) {
   return GestureDetector(
+    // 클릭시 Dialog가 뜸
     onTap: () => _showCategoryDialog('하드 모드', repository, context, categories),
     child: Container(
       decoration: BoxDecoration(

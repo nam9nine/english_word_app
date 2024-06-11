@@ -1,3 +1,5 @@
+
+// 단어 모델
 class Word {
   final int id;
   final String english;
@@ -7,16 +9,15 @@ class Word {
 
   Word({required this.id, required this.english, this.meaning, required this.category, required this.isWrong});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'id': id,
-      'english': english,
-      'meaning': meaning,
-      'category': category,
-      'isWrong': isWrong ? 1 : 0,
-    };
-  }
-
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'id': id,
+  //     'english': english,
+  //     'meaning': meaning,
+  //     'category': category,
+  //     'isWrong': isWrong ? 1 : 0,
+  //   };
+  // }
   factory Word.fromMap(Map<String, dynamic> map) {
     return Word(
       id: map['id'],

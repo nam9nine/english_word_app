@@ -25,8 +25,8 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
   late List<Word> showWords = [];
   late TextEditingController answerController = TextEditingController();
   late CarouselController _carouselController;
+  // TextField 사용 감지를 알기 위해 변수 선언
   final FocusNode focusNode = FocusNode();
-
   String feedbackMessage = '';
   bool isCorrect = false;
   int correctCount = 0;
@@ -62,11 +62,14 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
   }
 
   void _init() async {
+    // 만약 오답 퀴즈 요청이 아니라면 카테고리 별 단어를 가져오고 해당 요청이 맞다면
+    // 오답 단어들을 전부 불러온다.
     allWords = widget.isIncorrectQuiz ?
         await widget.repository.getWrongAnswer() :
         await widget.repository.getWordsByCategory(widget.category!);
     setState(() {
       showWords = widget.isIncorrectQuiz ?
+          // 오답 퀴즈는 10개의 랜덤한 단어들, 일반 퀴즈는 5개의 랜덤 단어들
       (List.from(allWords)..shuffle()).take(10).toList().cast<Word>() :
       (List.from(allWords)..shuffle()).take(5).toList().cast<Word>();
     });
@@ -93,7 +96,6 @@ class _QuizNormalPageState extends State<QuizNormalPage> {
       style: const TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
     );
   }
-
   Widget _buildQuizWidget() {
     return Column(
       children: <Widget>[

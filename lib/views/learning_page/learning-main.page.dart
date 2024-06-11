@@ -37,6 +37,7 @@ class _LearnPage extends State<LearnMainPage> {
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
           children: <Widget>[
+            // 메인에서 초기화한 카테고리 리스트 요소마다  카드형식으로 만들어줌
             ...widget.categories.map((category){
               return LearnMainCard(category: category, repository: widget.repository,);
             })

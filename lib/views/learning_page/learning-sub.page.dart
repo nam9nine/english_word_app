@@ -25,6 +25,7 @@ class _LearnSubPageState extends State<LearnSubPage> {
    _init();
   }
   _init () async {
+    // String형식으로 카테고리를 getWordsByCategory함수 인자로 넘겨 해당되는 단어들만 가져온다
     List<Word> loadList = await widget.repository.getWordsByCategory(widget.category);
     setState(() {
       showList = loadList;
@@ -57,6 +58,8 @@ class _LearnSubPageState extends State<LearnSubPage> {
                       ),
                   ),
                  ),
+              // 만약 단어 리스트가 비어 있으면 CircularProgressIndicator 위젯을 사용하여
+              //사용자에게 로딩중이라는 것을 알려줌
               showList.isEmpty ? const CircularProgressIndicator()
               : LearnCarouselSlider(
                 words: showList,

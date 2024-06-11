@@ -12,6 +12,7 @@ class DatabaseHelper {
 
   Future<Database> get database async {
     if (_database != null) return _database!;
+    // 데이터 베이스 초기 설정
     _database = await _initDB('words.db');
     return _database!;
   }
@@ -19,12 +20,13 @@ class DatabaseHelper {
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
-
+    // 데이터베이스 데이터를 모두 지움
     await deleteDatabase(path);
+    // 데이터베이스 생성 될 때 _createDB 호출
     return await openDatabase(path, version: 1, onCreate: _createDB);
   }
-
   Future<void> _createDB(Database db, int version) async {
+    //테이블 정의
     await db.execute('''
     CREATE TABLE words (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,7 +38,7 @@ class DatabaseHelper {
   ''');
     await _insertInitialWords(db);
   }
-
+  // 데이터 베이스가 생성 됨과 동시에 JSON파일에 있는 단어를 데이터 베이스에 넣는다
   Future _insertInitialWords(Database db) async {
     try {
       String data = await rootBundle.loadString('assets/data/words.json');
