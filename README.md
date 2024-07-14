@@ -12,7 +12,7 @@ Flutter 환경이 설치되어 있어야 하며, Flutter의 버전은 3.3.1 이�
 ### 설치 방법
 1. 프로젝트 클론
    ```bash
-   git clone https://github.com/yourusername/english_world.git
+   git clone https://github.com/yourusername/english_word.git
    cd english_world
    ```
 2. 의존성 패키지 설치
