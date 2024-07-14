@@ -1,6 +1,6 @@
 
 
-# English World - Team 6 Project
+# English Word - Team 6 Project
 
 ## 프로젝트 설명
 English World는 다양한 카테고리별 영어 단어를 학습할 수 있는 Flutter 애플리케이션입니다.
